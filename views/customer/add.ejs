@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">User</h1>
+  <div class="btn-toolbar mb-2 mb-md 0">
+    <div class="btn-group me-2">
+      <button class="btn btn-sm btn-outline-secondary">?</button>
+    </div>
+  </div>
+</div>
+
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+          <li class="breadcrumb-item active">New User</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col text-end fw-lighter">
+      <b>UserId</b>
+    </div>
+  </div>
+</div>
+<!-- Display flash error message if it exists -->
+<% if(errorMessage) { %>
+  <div class="alert alert-danger" role="alert">
+    <%= errorMessage %>
+  </div>
+<% } %>
+
+<form action="/add" method="POST" onsubmit="return validateForm();">
+
+ <!-- Display error messages -->
+ <div class="alert alert-danger" id="errorAlert" style="display: none;"></div>
+ 
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" value="<%= customer ? customer.firstName : '' %>" placeholder="First Name" required>
+      <!-- Display first name error message -->
+      <div id="firstNameError" class="text-danger"></div>
+    </div>
+
+    <div class="col">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" name="lastName" value="<%= customer ? customer.lastName : '' %>" placeholder="Last Name" required>
+      <!-- Display last name error message -->
+      <div id="lastNameError" class="text-danger"></div>
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="telephone">Telephone</label>
+      <input type="text" class="form-control" id="telephone" name="telephone" value="<%= customer ? customer.telephone : '' %>" placeholder="Telephone" required>
+    </div>
+
+    <div class="col">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email" value="<%= customer ? customer.email : '' %>" placeholder="Email" required>
+    </div>
+  </div>
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Add User</button>
+  </div>
+
+</form>
+
+<script>
+  function validateForm() {
+    var firstName = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
+
+    // Reset error messages
+    document.getElementById("firstNameError").innerHTML = "";
+    document.getElementById("lastNameError").innerHTML = "";
+    document.getElementById("errorAlert").style.display = "none";
+
+    // Check if first name is a non-empty string
+    if (!firstName || typeof firstName !== "string") {
+      document.getElementById("firstNameError").innerHTML = "First name must be a non-empty string.";
+      return false;
+    }
+
+    // Check if last name is a non-empty string
+    if (!lastName || typeof lastName !== "string") {
+      document.getElementById("lastNameError").innerHTML = "Last name must be a non-empty string.";
+      return false;
+    }
+
+    // Validation passed
+    return true;
+  }
+</script>
